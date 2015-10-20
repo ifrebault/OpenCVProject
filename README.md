@@ -6,5 +6,5 @@ Deadlines :
 - 13/11 : final report
 
 Attention : 
-- faire des tests unitaires
+- faire des tests de non régression
 - faire des .h pour chaque .cpp sauf pour le .cpp qui contient le main
