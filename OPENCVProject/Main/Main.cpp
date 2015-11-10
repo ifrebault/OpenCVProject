@@ -14,6 +14,9 @@
 //#include "../Business/Picture.h"
 //#include "../Business/Disease.h"
 
+#include "../Business/PreTreatment.h"
+#include "../Business/ParametersExtraction.h"
+
 #include "opencv2/opencv.hpp"
 
 using namespace std;
@@ -22,15 +25,17 @@ using namespace cv;
 int main(int argc, const char * argv[]) {
     
     std::cout << "this is opencvproject !\n";
-    /*
-    Mat image = imread( "./image2.jpg");
+    //lecture dans la base de données
+    Mat image = imread("../../OpenCVProject/BDD jpg/img0.jpg");
+    std::cout << image.size() << endl;
     imshow("image",image);
     waitKey(0);
-    */
-    
+    //envoie vers les fonctions de la couche Business
+    treatment(image,false);
+    //vérification du bon fonctionnement de la classe patient
     Patient patient0;
     patient0.getName();
-    
+    std::cout << patient0.getName() <<" is my name"<< endl;
     return 0;
     
 }
