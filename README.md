@@ -8,9 +8,3 @@ Deadlines :
 Attention : 
 - faire des tests de non régression
 - faire des .h pour chaque .cpp sauf pour le .cpp qui contient le main
-
-Team :
-- Jonathan COUTURIER
-- Karim MIMOUNI
-- Guillaume LAURENT
-- Inès FREBAULT
