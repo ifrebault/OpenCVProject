@@ -15,7 +15,7 @@
 //#include "../Business/Disease.h"
 
 #include "../Business/PreTreatment.h"
-#include "../Business/ParametersExtraction.h"
+#include "../Business/FaceDetection.h"
 
 #include "opencv2/opencv.hpp"
 
@@ -36,6 +36,9 @@ int main(int argc, const char * argv[]) {
     Patient patient0;
     patient0.getName();
     std::cout << patient0.getName() <<" is my name"<< endl;
+    
+    recognise(image);
+    
     return 0;
     
 }

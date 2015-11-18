@@ -24,8 +24,8 @@ private:
 public:
     //cluster getDatas(int id) const;
     Patient();
-    std::string getName() const;
-    Disease getDiseases(int id) const;
+    const std::string& getName() const;
+    const Disease& getDiseases(int id) const;
     Picture getPictures(int id) const;
     //~Patient();
     

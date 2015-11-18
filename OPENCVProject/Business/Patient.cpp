@@ -31,16 +31,17 @@ Patient::Patient() {
     telephoneNumber= "0000000000";
         //constructeur
 }
-
-Disease Patient::getDiseases(int id) const{
+/*
+const Disease& Patient::getDiseases(int id) const{ 
     return Disease();
-}
+}*/
+
     
 Picture Patient::getPictures(int id) const{
     return Picture();
 }
     
-string Patient::getName() const{
+const string& Patient::getName() const{
     return name;
 }
     
