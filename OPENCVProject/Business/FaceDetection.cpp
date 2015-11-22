@@ -41,15 +41,26 @@ void recognise(Mat image){
     // Let's say we want to keep 10 Eigenfaces and have a threshold value of 10.0
     int num_components = 10;
     double threshold = 10.0;
+    int radius=1;
+    int neighbors=8;
+    int grid_x=8;
+    int grid_y=8;
     // Then if you want to have a cv::FaceRecognizer with a confidence threshold,
     // create the concrete implementation with the appropiate parameters:
+    //todo : construction base à refaire une fois BDD dispo
     Mat img1 = treatment(imread("../../OpenCVProject/BDD jpg/img1.jpg"),false);
     Mat img2 = treatment(imread("../../OpenCVProject/BDD jpg/img2.jpg"),false);
+    Mat img3 = treatment(imread("../../OpenCVProject/BDD jpg/img3.jpg"),false);
+    Mat img4 = treatment(imread("../../OpenCVProject/BDD jpg/img4.jpg"),false);
 
-    vector<Mat> images = {img1,img2};
-    vector<int> labels = {1,2};
+
+    vector<Mat> images = {img1,img2,img3,img4};
+    vector<int> labels = {1,2,3,4};
 
     Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer(num_components, threshold);
+    //Ptr<face::FaceRecognizer> model = face::createFisherFaceRecognizer(num_components, threshold);
+    //Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer(radius, neighbors, grid_x, grid_y, threshold);
+
     model->train(images, labels);
 
 
@@ -67,8 +78,6 @@ void recognise(Mat image){
     // ...
     cout << predicted_label;
 
-//Ptr<cv::face::FaceRecognizer> createFisherFaceRecognizer(int num_components=0, double threshold=DBL_MAX);
 
-//Ptr<cv::face::FaceRecognizer> createLBPHFaceRecognizer(int radius=1, int neighbors=8, int grid_x=8, int grid_y=8, double threshold=DBL_MAX);
 
 }
