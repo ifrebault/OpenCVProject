@@ -3,7 +3,7 @@
 Bibliothèques nécessaires pour exécuter le projet :
 - openCV
 - openCV_contrib/face
-- 
+
 Deadlines :
 - 13/11 : final report
 
