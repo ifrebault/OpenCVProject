@@ -33,7 +33,5 @@ Mat treatment(Mat image, bool equal){
     if (equal){
         cv::equalizeHist(image3, image3);
     }
-    imshow("image traitee",image3);
-    waitKey(0);
     return image3;
 }
