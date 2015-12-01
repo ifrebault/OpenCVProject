@@ -39,27 +39,31 @@ using namespace std;
 void recognise(Mat image){
 
     int num_components = 10;
-    double threshold = 0;
+    double threshold = 2;
     int radius=1;
     int neighbors=8;
     int grid_x=8;
     int grid_y=8;
 
     //todo : construction base à refaire une fois BDD dispo
-    //Mat img0 = treatment(imread("../../OpenCVProject/BDD jpg/img0.jpg"),false);
+    Mat img0 = treatment(imread("../../OpenCVProject/BDD jpg/img0.jpg"),false);
     Mat img1 = treatment(imread("../../OpenCVProject/BDD jpg/img1.jpg"),false);
     Mat img2 = treatment(imread("../../OpenCVProject/BDD jpg/img2.jpg"),false);
     Mat img3 = treatment(imread("../../OpenCVProject/BDD jpg/img3.jpg"),false);
     Mat img4 = treatment(imread("../../OpenCVProject/BDD jpg/img4.jpg"),false);
     Mat img5 = treatment(imread("../../OpenCVProject/BDD jpg/img5.jpg"),false);
     Mat img6 = treatment(imread("../../OpenCVProject/BDD jpg/img6.jpg"),false);
+    Mat img7 = treatment(imread("../../OpenCVProject/BDD jpg/img7.jpg"),false);
+    Mat img8 = treatment(imread("../../OpenCVProject/BDD jpg/img8.jpg"),false);
+    //Mat img9 = treatment(imread("../../OpenCVProject/BDD jpg/img9.jpg"),false);
+    Mat img10 = treatment(imread("../../OpenCVProject/BDD jpg/img10.jpg"),false);
 
-    vector<Mat> images = {img1,img2,img3,img4,img5,img6};
-    vector<int> labels = {1,2,3,4,5,6};
+    vector<Mat> images = {img0,img1,img2,img3,img4,img5,img6,img7,img8,img10};
+    vector<int> labels = {0,1,2,3,4,5,6,7,8,10};
 
     //Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer(num_components, threshold);
-    //Ptr<face::FaceRecognizer> model = face::createFisherFaceRecognizer(num_components, threshold);
-    Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer(radius, neighbors, grid_x, grid_y, threshold);
+    Ptr<face::FaceRecognizer> model = face::createFisherFaceRecognizer(num_components, threshold);
+    //Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer(radius, neighbors, grid_x, grid_y, threshold);
 
     model->train(images, labels);
 
