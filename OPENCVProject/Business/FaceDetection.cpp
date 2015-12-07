@@ -2,7 +2,7 @@
 // Name        : FaceDetection.cpp
 // Author      :
 // Version     :
-// Copyright   : Your copyright notice
+// Copyright   : http://docs.opencv.org/2.4/doc/tutorials/objdetect/cascade_classifier/cascade_classifier.html
 // Description : C++ project
 //============================================================================
 
@@ -12,20 +12,20 @@
 /*
 ETAPES :
 - Training avec la base dispo (à faire ultérieurement)
-- application de l'algo (EigenFaces ?)
-- sortie du résultat
+- Récupération du visage seul 
+- Application de l'algo (EigenFaces ?)
+- ssortie du résultat
 */
-
-//#include "opencv2/contrib/contrib.hpp"
-
-
-#include "opencv2/face.hpp"
 
 #include "opencv2/opencv.hpp"
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
-#include "opencv2/flann/miniflann.hpp"
+#include "opencv2/objdetect/objdetect.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+
 #include "PreTreatment.h"
+#include "FaceDetection.h"
+#include "opencv2/face.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -34,12 +34,18 @@ ETAPES :
 using namespace cv;
 using namespace std;
 
-//fonctions de reconnaissance disponible :
+//variables globales
+//attention, en cas d'erreur à la compilation, vérifier le chemin...
+String face_cascade_name = "../../OpenCVProject/OPENCVProject/Business/haarcascade_frontalface_alt.xml";
+String eyes_cascade_name = "../../OpenCVProject/OPENCVProject/Business/haarcascade_eye_tree_eyeglasses.xml";
+CascadeClassifier face_cascade;
+CascadeClassifier eyes_cascade;
+RNG rng(12345);
 
 void recognise(Mat image){
 
     int num_components = 10;
-    double threshold = 2;
+    double threshold = 10;
     int radius=1;
     int neighbors=8;
     int grid_x=8;
@@ -60,9 +66,20 @@ void recognise(Mat image){
 
     vector<Mat> images = {img0,img1,img2,img3,img4,img5,img6,img7,img8,img10};
     vector<int> labels = {0,1,2,3,4,5,6,7,8,10};
-
-    //Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer(num_components, threshold);
-    Ptr<face::FaceRecognizer> model = face::createFisherFaceRecognizer(num_components, threshold);
+    
+    //vérification du chargement des cascades (fichiers xml)
+    if( !face_cascade.load(face_cascade_name)){
+        cout << "error loading face_cascade" << endl;
+    }
+    if( !eyes_cascade.load(eyes_cascade_name)){
+        cout << "error loading eye_cascade" << endl;
+    }
+    
+    detectAndDisplay(treatment(image,false));
+     
+    /*
+    Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer(num_components, threshold);
+    //Ptr<face::FaceRecognizer> model = face::createFisherFaceRecognizer(num_components, threshold);
     //Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer(radius, neighbors, grid_x, grid_y, threshold);
 
     model->train(images, labels);
@@ -79,5 +96,24 @@ void recognise(Mat image){
     if(predicted_label == -1){
         cout << "face not recognized..." << endl;
     }
+    */
 
+}
+
+void detectAndDisplay(Mat frame_gray)
+{
+    std::vector<Rect> faces; //contenu de face_cascade
+    
+    face_cascade.detectMultiScale(frame_gray,faces,1.1,2,0|CV_HAAR_SCALE_IMAGE, Size(30, 30));
+    
+    for(size_t i=0; i<faces.size(); i=i+1)
+    {
+        Point center(faces[i].x + faces[i].width*0.5, faces[i].y + faces[i].height*0.5);
+        ellipse(frame_gray, center, Size( faces[i].width*0.5, faces[i].height*0.5), 0, 0, 360, Scalar( 255, 0, 255 ), 4, 8, 0);
+        //Regions Of Interest : visage
+        Mat faceROI = frame_gray(faces[i]);
+    }
+    //résultat : debug uniquement
+    imshow("face detection",frame_gray);
+    waitKey(0);
 }

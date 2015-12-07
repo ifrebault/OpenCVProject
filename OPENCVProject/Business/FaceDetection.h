@@ -8,4 +8,6 @@
 
 void recognise(cv::Mat image);
 
+void detectAndDisplay(cv::Mat frame );
+
 #endif
