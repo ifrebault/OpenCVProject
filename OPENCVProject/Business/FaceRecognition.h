@@ -1,5 +1,5 @@
-#ifndef DEF_FACEDETECTION
-#define DEF_FACEDETECTION
+#ifndef DEF_FACERECOGNITION
+#define DEF_FACERECOGNITION
 
 #include <iostream>
 #include <string>

@@ -15,7 +15,7 @@
 //#include "../Business/Disease.h"
 
 #include "../Business/PreTreatment.h"
-#include "../Business/FaceDetection.h"
+#include "../Business/FaceRecognition.h"
 
 #include "opencv2/opencv.hpp"
 

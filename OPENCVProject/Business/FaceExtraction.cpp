@@ -1,5 +1,5 @@
 //============================================================================
-// Name        : ParametersExtraction.cpp
+// Name        : FaceExtraction.cpp
 // Author      :
 // Version     :
 // Copyright   : Your copyright notice
@@ -49,8 +49,6 @@ Mat detectFace(Mat frame)
     for(size_t i=0; i<faces.size(); i=i+1){
         faceROI = frame_gray(faces[i]);
     }
-    imshow("faceROI",faceROI);
-    waitKey(0);
     return faceROI;
     
 }
