@@ -36,7 +36,7 @@ using namespace std;
 
 //variables globales
 //attention, en cas d'erreur à la compilation, vérifier le chemin...
-String face_cascade_name = "../../OpenCVProject/OPENCVProject/Business/haarcascade_frontalface_alt.xml";
+String face_cascade_name = "../../OpenCVProject/OPENCVProject/Business/lbpcascade_frontalface.xml";
 String eyes_cascade_name = "../../OpenCVProject/OPENCVProject/Business/haarcascade_eye_tree_eyeglasses.xml";
 CascadeClassifier face_cascade;
 CascadeClassifier eyes_cascade;

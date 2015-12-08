@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
     
     std::cout << "this is opencvproject !\n";
     //lecture dans la base de données
-    Mat image = imread("../../OpenCVProject/BDD jpg/img0.jpg");
+    Mat image = imread("../../OpenCVProject/BDD jpg/img1.jpg");
     std::cout << image.size() << endl;
     imshow("image",treatment(image,false));
     waitKey(0);
