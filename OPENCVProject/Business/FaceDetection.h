@@ -5,9 +5,6 @@
 #include <string>
 #include "opencv2/opencv.hpp"
 
-
 void recognise(cv::Mat image);
-
-void detectAndDisplay(cv::Mat frame );
 
 #endif

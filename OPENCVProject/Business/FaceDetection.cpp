@@ -25,6 +25,8 @@ ETAPES :
 
 #include "PreTreatment.h"
 #include "FaceDetection.h"
+#include "FaceExtraction.h"
+
 #include "opencv2/face.hpp"
 
 #include <iostream>
@@ -33,14 +35,6 @@ ETAPES :
 
 using namespace cv;
 using namespace std;
-
-//variables globales
-//attention, en cas d'erreur à la compilation, vérifier le chemin...
-String face_cascade_name = "../../OpenCVProject/OPENCVProject/Business/lbpcascade_frontalface.xml";
-String eyes_cascade_name = "../../OpenCVProject/OPENCVProject/Business/haarcascade_eye_tree_eyeglasses.xml";
-CascadeClassifier face_cascade;
-CascadeClassifier eyes_cascade;
-RNG rng(12345);
 
 void recognise(Mat image){
 
@@ -52,68 +46,64 @@ void recognise(Mat image){
     int grid_y=8;
 
     //todo : construction base à refaire une fois BDD dispo
-    Mat img0 = treatment(imread("../../OpenCVProject/BDD jpg/img0.jpg"),false);
-    Mat img1 = treatment(imread("../../OpenCVProject/BDD jpg/img1.jpg"),false);
-    Mat img2 = treatment(imread("../../OpenCVProject/BDD jpg/img2.jpg"),false);
-    Mat img3 = treatment(imread("../../OpenCVProject/BDD jpg/img3.jpg"),false);
-    Mat img4 = treatment(imread("../../OpenCVProject/BDD jpg/img4.jpg"),false);
-    Mat img5 = treatment(imread("../../OpenCVProject/BDD jpg/img5.jpg"),false);
-    Mat img6 = treatment(imread("../../OpenCVProject/BDD jpg/img6.jpg"),false);
-    Mat img7 = treatment(imread("../../OpenCVProject/BDD jpg/img7.jpg"),false);
-    Mat img8 = treatment(imread("../../OpenCVProject/BDD jpg/img8.jpg"),false);
-    //Mat img9 = treatment(imread("../../OpenCVProject/BDD jpg/img9.jpg"),false);
-    Mat img10 = treatment(imread("../../OpenCVProject/BDD jpg/img10.jpg"),false);
+    Mat img0 = imread("../../OpenCVProject/BDD jpg/img0.jpg");
+    Mat img1 = imread("../../OpenCVProject/BDD jpg/img1.jpg");
+    Mat img2 = imread("../../OpenCVProject/BDD jpg/img2.jpg");
+    Mat img3 = imread("../../OpenCVProject/BDD jpg/img3.jpg");
+    Mat img4 = imread("../../OpenCVProject/BDD jpg/img4.jpg");
+    Mat img5 = imread("../../OpenCVProject/BDD jpg/img5.jpg");
+    Mat img6 = imread("../../OpenCVProject/BDD jpg/img6.jpg");
+    Mat img7 = imread("../../OpenCVProject/BDD jpg/img7.jpg");
+    Mat img8 = imread("../../OpenCVProject/BDD jpg/img8.jpg");
+    Mat img9 = imread("../../OpenCVProject/BDD jpg/img9.jpg");
+    Mat img10 = imread("../../OpenCVProject/BDD jpg/img10.jpg");
+    Mat img11 = imread("../../OpenCVProject/BDD jpg/img11.jpg");
+    Mat img12 = imread("../../OpenCVProject/BDD jpg/img12.jpg");
+    Mat img13 = imread("../../OpenCVProject/BDD jpg/img13.jpg");
+    Mat img14 = imread("../../OpenCVProject/BDD jpg/img14.jpg");
+    
+    
 
-    vector<Mat> images = {img0,img1,img2,img3,img4,img5,img6,img7,img8,img10};
-    vector<int> labels = {0,1,2,3,4,5,6,7,8,10};
+    img0=treatment(detectFace(img0),false);
+    img1=treatment(detectFace(img1),false);
+    img2=treatment(detectFace(img2),false);
+    img3=treatment(detectFace(img3),false);
+    img4=treatment(detectFace(img4),false);
+    img5=treatment(detectFace(img5),false);
+    img6=treatment(detectFace(img6),false);
+    img7=treatment(detectFace(img7),false);
+    img8=treatment(detectFace(img8),false);
+    img9=treatment(detectFace(img9),false);
+    img10=treatment(detectFace(img10),false);
+    img11=treatment(detectFace(img11),false);
+    img13=treatment(detectFace(img13),false);
+    img14=treatment(detectFace(img14),false);
     
-    //vérification du chargement des cascades (fichiers xml)
-    if( !face_cascade.load(face_cascade_name)){
-        cout << "error loading face_cascade" << endl;
-    }
-    if( !eyes_cascade.load(eyes_cascade_name)){
-        cout << "error loading eye_cascade" << endl;
-    }
     
-    detectAndDisplay(treatment(image,false));
-     
-    /*
+    vector<Mat> images = {img0,img1,img2,img3,img4,img5,img6,img7,img8,img9,img10,img11,img13,img14};
+    vector<int> labels = {0,1,2,3,4,5,6,7,8,9,10,11,13,14};
+    
     Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer(num_components, threshold);
     //Ptr<face::FaceRecognizer> model = face::createFisherFaceRecognizer(num_components, threshold);
     //Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer(radius, neighbors, grid_x, grid_y, threshold);
-
+    
     model->train(images, labels);
-
 
     // The following line reads the threshold from the Eigenfaces model:
     //double current_threshold = model->getDouble("threshold");
     // And this line sets the threshold to 0.0:
     //model->set("threshold", 0.0);
-    image=treatment(image, false);
+    
+    image=treatment(detectFace(image),false);
+
+    imshow("face only",image);
+    waitKey(0);
+    
     int predicted_label = model->predict(image);
     cout << "label image reconnue :" << endl;
     cout << predicted_label << endl;
     if(predicted_label == -1){
         cout << "face not recognized..." << endl;
     }
-    */
-
 }
 
-void detectAndDisplay(Mat frame_gray)
-{
-    std::vector<Rect> faces; //contenu de face_cascade
-    
-    face_cascade.detectMultiScale(frame_gray,faces,1.1,2,0|CV_HAAR_SCALE_IMAGE, Size(30, 30));
-    
-    for(size_t i=0; i<faces.size(); i=i+1)
-    {
-        Point center(faces[i].x + faces[i].width*0.5, faces[i].y + faces[i].height*0.5);
-        ellipse(frame_gray, center, Size( faces[i].width*0.5, faces[i].height*0.5), 0, 0, 360, Scalar( 255, 0, 255 ), 4, 8, 0);
-        //Regions Of Interest : visage
-        Mat faceROI = frame_gray(faces[i]);
-    }
-    //résultat : debug uniquement
-    imshow("face detection",frame_gray);
-    waitKey(0);
-}

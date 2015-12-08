@@ -1,4 +1,4 @@
-//============================================================================
+ //============================================================================
 // Name        : PreTreatment.cpp
 // Author      :
 // Version     :
@@ -7,7 +7,7 @@
 //============================================================================
 
 //Entrée : image en couleur
-//Sortie : image traitée (en niveau de gris,...)
+//Sortie : image traitée (en niveau de gris, resizé et équalisée si nécessaire)
 
 /*
 ETAPES :
@@ -26,12 +26,9 @@ Mat treatment(Mat image, bool equal){
     Size size(278,338);
     Mat image2;
     cv::resize(image, image2, size);
-    //passage en niveau de gris
-    Mat image3 = image2.Mat::clone();
-    cv::cvtColor( image2, image3, CV_BGR2GRAY );
     //egalisation
     if (equal){
-        cv::equalizeHist(image3, image3);
+        cv::equalizeHist(image2, image2);
     }
-    return image3;
+    return image2;
 }
