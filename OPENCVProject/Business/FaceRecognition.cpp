@@ -46,7 +46,7 @@ void recognise(Mat image){
     int grid_y=8;
 
     //todo : construction base à refaire une fois BDD dispo
-    Mat img0 = imread("../../OpenCVProject/BDD jpg/img0.jpg");
+    Mat img0 = imread("../../OpenCVProject/BDD jpg/img1.jpg");
     Mat img1 = imread("../../OpenCVProject/BDD jpg/img1.jpg");
     Mat img2 = imread("../../OpenCVProject/BDD jpg/img2.jpg");
     Mat img3 = imread("../../OpenCVProject/BDD jpg/img3.jpg");
@@ -64,7 +64,9 @@ void recognise(Mat image){
     Mat img15 = imread("../../OpenCVProject/BDD jpg/img15.jpg");
     Mat img16 = imread("../../OpenCVProject/BDD jpg/img16.jpg");
     Mat img17 = imread("../../OpenCVProject/BDD jpg/img17.jpg");
-    Mat img18 = imread("../../OpenCVProject/BDD jpg/img17.jpg");
+    Mat img18 = imread("../../OpenCVProject/BDD jpg/img18.jpg");
+    
+    system( "../../OpenCVProject/BDD jpg/b /s /a-d * > file_names.txt" );
 
     img0=treatment(detectFace(img0),true);
     img1=treatment(detectFace(img1),true);
@@ -91,7 +93,7 @@ void recognise(Mat image){
     
     //Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer(); //pour faire fonctionner, ne pas renseigner de seuil de confiance
     //Ptr<face::FaceRecognizer> model = face::createFisherFaceRecognizer(0); //pour faire fonctionner, ne pas renseigner de seuil de confiance
-    Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer(1,8,16,16); //étudier influence des différents paramètres !
+    Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer(2,8,16,16); //étudier influence des différents paramètres !
     
     model->train(images, labels);
 

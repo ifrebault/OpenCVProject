@@ -28,9 +28,10 @@ int main(int argc, const char * argv[]) {
     
     //lecture du fichier à analyser
     //Mat image = imread("../../OpenCVProject/BDD jpg/img4.jpg");
-    Mat image = imread("../../OpenCVProject/BDD jpg/img14.jpg");
+    Mat image = imread("../../OpenCVProject/BDD jpg/img19.jpg");
     cout << image.size() << endl;
-    
+    imshow("image",treatment(image,false));
+    waitKey(0);
     //envoi vers les fonctions de la couche Business
     recognise(image);
     
