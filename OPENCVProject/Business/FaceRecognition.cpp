@@ -61,8 +61,10 @@ void recognise(Mat image){
     Mat img12 = imread("../../OpenCVProject/BDD jpg/img12.jpg");
     Mat img13 = imread("../../OpenCVProject/BDD jpg/img13.jpg");
     Mat img14 = imread("../../OpenCVProject/BDD jpg/img14.jpg");
-    
-    
+    Mat img15 = imread("../../OpenCVProject/BDD jpg/img15.jpg");
+    Mat img16 = imread("../../OpenCVProject/BDD jpg/img16.jpg");
+    Mat img17 = imread("../../OpenCVProject/BDD jpg/img17.jpg");
+    Mat img18 = imread("../../OpenCVProject/BDD jpg/img17.jpg");
 
     img0=treatment(detectFace(img0),true);
     img1=treatment(detectFace(img1),true);
@@ -79,22 +81,20 @@ void recognise(Mat image){
     img12=treatment(detectFace(img12),true);
     img13=treatment(detectFace(img13),true);
     img14=treatment(detectFace(img14),true);
+    img15=treatment(detectFace(img15),true);
+    img16=treatment(detectFace(img16),true);
+    img17=treatment(detectFace(img17),true);
+    img18=treatment(detectFace(img18),true);
     
+    vector<Mat> images = {img0,img1,img2,img3,img4,img5,img6,img7,img8,img9,img10,img11,img12,img13,img14,img15,img16,img17,img18};
+    vector<int> labels = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18};
     
-    vector<Mat> images = {img0,img1,img2,img3,img4,img5,img6,img7,img8,img9,img10,img11,img12,img13,img14};
-    vector<int> labels = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-    
-    //Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer();
-    //Ptr<face::FaceRecognizer> model = face::createFisherFaceRecognizer();
-    Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer();
+    //Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer(); //pour faire fonctionner, ne pas renseigner de seuil de confiance
+    //Ptr<face::FaceRecognizer> model = face::createFisherFaceRecognizer(0); //pour faire fonctionner, ne pas renseigner de seuil de confiance
+    Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer(1,8,16,16); //étudier influence des différents paramètres !
     
     model->train(images, labels);
 
-    // The following line reads the threshold from the Eigenfaces model:
-    //double current_threshold = model->getDouble("threshold");
-    // And this line sets the threshold to 0.0:
-    //model->set("threshold", 0.0);
-    
     image=treatment(detectFace(image),true);
     
     int predicted_label = model->predict(image);
