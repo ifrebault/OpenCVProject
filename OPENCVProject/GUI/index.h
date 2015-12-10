@@ -172,7 +172,7 @@ namespace myOpenCV30 {
 				capture = new VideoCapture(0);
 				cameraFrame = new Mat();
 			}
-			string str = "../../ImgTemp/imgTemp.jpg";
+			string str = "../imgTemp/imgTemp.jpg";
 			capture->read(*cameraFrame); 
 			imwrite(str, *cameraFrame);
 			this->load->Visible = true;
@@ -184,7 +184,7 @@ namespace myOpenCV30 {
 
 			///////////////////////////
 
-			int i = 2;
+			int i = 1;
 			if(i == 1){
 				myOpenCV30::MyPatientFound form;
 				form.ShowDialog();

@@ -26,7 +26,11 @@ namespace myOpenCV30 {
 	public ref class MyPatientFound : public System::Windows::Forms::Form{
 	public:
 		MyPatientFound(void){
-			InitializeComponent();
+			//ICI RECUPERATION DES INFOS DE LA BASE
+			System::String^ name = "Inès Frébault";
+			System::String^ urlPicture = "img0";
+			//ET ENVOI DES DONNES DANS LA FONCTION DE LA FORM
+			InitializeComponent(name, urlPicture);
 		}
 
 	protected:
@@ -43,10 +47,11 @@ namespace myOpenCV30 {
 	System::Windows::Forms::Label^  Result;
 	System::ComponentModel::IContainer^  components;
 
+
+
 #pragma region Windows Form Designer generated code
 
-		void InitializeComponent(){
-			
+		void InitializeComponent(System::String^ name, System::String^ urlPicture){
 			this->Titre = (gcnew System::Windows::Forms::Label());
 			this->Picture = (gcnew System::Windows::Forms::PictureBox());
 			this->Patient = (gcnew System::Windows::Forms::GroupBox());
@@ -74,9 +79,9 @@ namespace myOpenCV30 {
 			// 
 			// Picture
 			// 
+			this->Picture->ImageLocation = "C:/Users/DSi_5/Desktop/ProjetBis/myOpenCV30/" + urlPicture + ".jpg";
 			this->Picture->Location = System::Drawing::Point(20, 37);
 			this->Picture->Name = L"Picture";
-			this->Picture->ImageLocation = L"C:/Users/DSi_5/Desktop/Projet2/img0.jpg";
 			this->Picture->Size = System::Drawing::Size(427, 489);
 			this->Picture->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->Picture->TabIndex = 2;
@@ -137,7 +142,9 @@ namespace myOpenCV30 {
 			this->Result->Padding = System::Windows::Forms::Padding(100, 0, 65, 0);
 			// 
 			// NamePatient
-			// 
+			//
+			
+			this->NamePatient->AppendText(name);
 			this->NamePatient->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->NamePatient->Cursor = System::Windows::Forms::Cursors::Default;
 			this->NamePatient->Enabled = false;
@@ -147,7 +154,6 @@ namespace myOpenCV30 {
 			this->NamePatient->Size = System::Drawing::Size(683, 28);
 			this->NamePatient->TabIndex = 12;
 			this->NamePatient->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->NamePatient->Text = "Inès Frébault";
 			this->NamePatient->BackColor = System::Drawing::Color::White;
 			this->NamePatient->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 40, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
@@ -193,8 +199,7 @@ namespace myOpenCV30 {
 #pragma endregion
 	
 private: System::Void Record_Click(System::Object^  sender, System::EventArgs^  e) {
-			 //FICHE MEDICALE
-
+			 //LANCE LA FICHE MEDICALE
 		 }
 };
 }
