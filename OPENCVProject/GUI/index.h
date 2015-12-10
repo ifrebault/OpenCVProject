@@ -39,8 +39,8 @@ namespace myOpenCV30 {
 			if(capture){ delete capture; }
 			if(cameraFrame){ delete cameraFrame; }
 		}
-	System::Windows::Forms::Label^  titre;
-	System::Windows::Forms::Label^  titre2;
+	System::Windows::Forms::Label^  title;
+	System::Windows::Forms::Label^  title2;
 	System::Windows::Forms::Label^  taken;
 	System::Windows::Forms::Button^  picture;
 	System::Windows::Forms::Button^  camera;
@@ -54,34 +54,34 @@ namespace myOpenCV30 {
 		void InitializeComponent(void)
 		{
 			this->load = (gcnew System::Windows::Forms::Button());
-			this->titre = (gcnew System::Windows::Forms::Label());
-			this->titre2 = (gcnew System::Windows::Forms::Label());
+			this->title = (gcnew System::Windows::Forms::Label());
+			this->title2 = (gcnew System::Windows::Forms::Label());
 			this->taken = (gcnew System::Windows::Forms::Label());
 			this->picture = (gcnew System::Windows::Forms::Button());
 			this->camera = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
-			// Titre
+			// title
 			// 
-			this->titre->AutoSize = true;
-			this->titre->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 22, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->title->AutoSize = true;
+			this->title->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 22, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->titre->ForeColor = System::Drawing::Color::White;
-			this->titre->Location = System::Drawing::Point(12, 20);
-			this->titre->Name = L"Titre";
-			this->titre->Size = System::Drawing::Size(327, 52);
-			this->titre->TabIndex = 1;
-			this->titre->Text = L"Medical Record";
+			this->title->ForeColor = System::Drawing::Color::White;
+			this->title->Location = System::Drawing::Point(12, 20);
+			this->title->Name = L"title";
+			this->title->Size = System::Drawing::Size(327, 52);
+			this->title->TabIndex = 1;
+			this->title->Text = L"Medical Record";
 			// 
-			// Titre2
+			// title2
 			// 
-			this->titre2->AutoSize = true;
-			this->titre2->ForeColor = System::Drawing::Color::Transparent;
-			this->titre2->Location = System::Drawing::Point(326, 9);
-			this->titre2->Name = L"Titre2";
-			this->titre2->Size = System::Drawing::Size(31, 20);
-			this->titre2->TabIndex = 8;
-			this->titre2->Text = L"TM";
+			this->title2->AutoSize = true;
+			this->title2->ForeColor = System::Drawing::Color::Transparent;
+			this->title2->Location = System::Drawing::Point(326, 9);
+			this->title2->Name = L"title2";
+			this->title2->Size = System::Drawing::Size(31, 20);
+			this->title2->TabIndex = 8;
+			this->title2->Text = L"TM";
 			// 
 			// Taken
 			// 
@@ -144,8 +144,8 @@ namespace myOpenCV30 {
 			this->Controls->Add(this->camera);
 			this->Controls->Add(this->picture);
 			this->Controls->Add(this->taken);
-			this->Controls->Add(this->titre2);
-			this->Controls->Add(this->titre);
+			this->Controls->Add(this->title2);
+			this->Controls->Add(this->title);
 			this->Controls->Add(this->load);
 			this->Name = L"MyIndex";
 			this->Text = L"MyIndex";
@@ -184,7 +184,7 @@ namespace myOpenCV30 {
 
 			///////////////////////////
 
-			int i = 1;
+			int i = 2;
 			if(i == 1){
 				myOpenCV30::MyPatientFound form;
 				form.ShowDialog();

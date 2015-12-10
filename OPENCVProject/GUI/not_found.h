@@ -36,104 +36,104 @@ namespace myOpenCV30 {
 			if (components){delete components;}
 		}
 
-	System::Windows::Forms::Label^  Titre;
-	System::Windows::Forms::PictureBox^  Picture;
-	System::Windows::Forms::GroupBox^  Patient;
-	System::Windows::Forms::Label^  Titre2;
-	System::Windows::Forms::GroupBox^  Informations;
+	System::Windows::Forms::Label^  title;
+	System::Windows::Forms::PictureBox^  picture;
+	System::Windows::Forms::GroupBox^  patient;
+	System::Windows::Forms::Label^  title2;
+	System::Windows::Forms::GroupBox^  informations;
 	System::Windows::Forms::Button^  Try;
-	System::Windows::Forms::Label^  Result;
+	System::Windows::Forms::Label^  result;
 	System::ComponentModel::IContainer^  components;
 
 #pragma region Windows Form Designer generated code
 
 		void InitializeComponent(void){
-			this->Titre = (gcnew System::Windows::Forms::Label());
-			this->Picture = (gcnew System::Windows::Forms::PictureBox());
-			this->Patient = (gcnew System::Windows::Forms::GroupBox());
-			this->Titre2 = (gcnew System::Windows::Forms::Label());
-			this->Informations = (gcnew System::Windows::Forms::GroupBox());
-			this->Result = (gcnew System::Windows::Forms::Label());
+			this->title = (gcnew System::Windows::Forms::Label());
+			this->picture = (gcnew System::Windows::Forms::PictureBox());
+			this->patient = (gcnew System::Windows::Forms::GroupBox());
+			this->title2 = (gcnew System::Windows::Forms::Label());
+			this->informations = (gcnew System::Windows::Forms::GroupBox());
+			this->result = (gcnew System::Windows::Forms::Label());
 			this->Try = (gcnew System::Windows::Forms::Button());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->Picture))->BeginInit();
-			this->Patient->SuspendLayout();
-			this->Informations->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->picture))->BeginInit();
+			this->patient->SuspendLayout();
+			this->informations->SuspendLayout();
 			this->SuspendLayout();
 			// 
-			// Titre
+			// title
 			// 
-			this->Titre->AutoSize = true;
-			this->Titre->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 22, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->title->AutoSize = true;
+			this->title->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 22, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->Titre->ForeColor = System::Drawing::Color::White;
-			this->Titre->Location = System::Drawing::Point(12, 19);
-			this->Titre->Name = L"Titre";
-			this->Titre->Size = System::Drawing::Size(327, 52);
-			this->Titre->TabIndex = 0;
-			this->Titre->Text = L"Medical Record";
+			this->title->ForeColor = System::Drawing::Color::White;
+			this->title->Location = System::Drawing::Point(12, 19);
+			this->title->Name = L"title";
+			this->title->Size = System::Drawing::Size(327, 52);
+			this->title->TabIndex = 0;
+			this->title->Text = L"Medical Record";
 			// 
-			// Picture
+			// picture
 			// 
-			this->Picture->Location = System::Drawing::Point(20, 37);
-			this->Picture->Name = L"Picture";
-			this->Picture->ImageLocation = L"C:/Users/DSi_5/Desktop/Projet2/not_found.png";
-			this->Picture->Size = System::Drawing::Size(427, 489);
-			this->Picture->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->Picture->TabIndex = 2;
-			this->Picture->TabStop = false;
+			this->picture->Location = System::Drawing::Point(20, 37);
+			this->picture->Name = L"picture";
+			this->picture->ImageLocation = L"C:/Users/DSi_5/Desktop/Projet2/not_found.png";
+			this->picture->Size = System::Drawing::Size(427, 489);
+			this->picture->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->picture->TabIndex = 2;
+			this->picture->TabStop = false;
 			// 
-			// Patient
+			// patient
 			// 
-			this->Patient->Controls->Add(this->Picture);
-			this->Patient->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->patient->Controls->Add(this->picture);
+			this->patient->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->Patient->ForeColor = System::Drawing::Color::White;
-			this->Patient->Location = System::Drawing::Point(21, 123);
-			this->Patient->Name = L"Patient";
-			this->Patient->Size = System::Drawing::Size(462, 551);
-			this->Patient->TabIndex = 6;
-			this->Patient->TabStop = false;
-			this->Patient->Text = L"Patient";
+			this->patient->ForeColor = System::Drawing::Color::White;
+			this->patient->Location = System::Drawing::Point(21, 123);
+			this->patient->Name = L"patient";
+			this->patient->Size = System::Drawing::Size(462, 551);
+			this->patient->TabIndex = 6;
+			this->patient->TabStop = false;
+			this->patient->Text = L"Patient";
 			// 
-			// Titre2
+			// title2
 			// 
-			this->Titre2->AutoSize = true;
-			this->Titre2->ForeColor = System::Drawing::Color::Transparent;
-			this->Titre2->Location = System::Drawing::Point(325, 9);
-			this->Titre2->Name = L"Titre2";
-			this->Titre2->Size = System::Drawing::Size(31, 20);
-			this->Titre2->TabIndex = 7;
-			this->Titre2->Text = L"TM";
+			this->title2->AutoSize = true;
+			this->title2->ForeColor = System::Drawing::Color::Transparent;
+			this->title2->Location = System::Drawing::Point(325, 9);
+			this->title2->Name = L"title2";
+			this->title2->Size = System::Drawing::Size(31, 20);
+			this->title2->TabIndex = 7;
+			this->title2->Text = L"TM";
 			// 
-			// Informations
+			// informations
 			// 
-			this->Informations->Controls->Add(this->Result);
-			this->Informations->Controls->Add(this->Try);
-			this->Informations->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->informations->Controls->Add(this->result);
+			this->informations->Controls->Add(this->Try);
+			this->informations->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->Informations->ForeColor = System::Drawing::Color::White;
-			this->Informations->Location = System::Drawing::Point(584, 123);
-			this->Informations->Name = L"Informations";
-			this->Informations->Size = System::Drawing::Size(784, 551);
-			this->Informations->TabIndex = 3;
-			this->Informations->TabStop = false;
-			this->Informations->Text = L"Informations";
+			this->informations->ForeColor = System::Drawing::Color::White;
+			this->informations->Location = System::Drawing::Point(584, 123);
+			this->informations->Name = L"informations";
+			this->informations->Size = System::Drawing::Size(784, 551);
+			this->informations->TabIndex = 3;
+			this->informations->TabStop = false;
+			this->informations->Text = L"Informations";
 			// 
-			// Result
+			// result
 			// 
-			this->Result->AutoSize = true;
-			this->Result->Location = System::Drawing::Point(51, 59);
-			this->Result->Name = L"Result";
-			this->Result->Size = System::Drawing::Size(440, 91);
-			this->Result->TabIndex = 14;
-			this->Result->TextAlign = System::Drawing::ContentAlignment::TopCenter;
-			this->Result->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(144)), 
+			this->result->AutoSize = true;
+			this->result->Location = System::Drawing::Point(51, 59);
+			this->result->Name = L"result";
+			this->result->Size = System::Drawing::Size(440, 91);
+			this->result->TabIndex = 14;
+			this->result->TextAlign = System::Drawing::ContentAlignment::TopCenter;
+			this->result->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(144)), 
 				static_cast<System::Int32>(static_cast<System::Byte>(144)));
-			this->Result->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 40, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->result->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 40, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->Result->Text = L"Match Not Found";
-			this->Result->ForeColor = System::Drawing::Color::White;
-			this->Result->Padding = System::Windows::Forms::Padding(8, 0, 6, 0);
+			this->result->Text = L"Match Not Found";
+			this->result->ForeColor = System::Drawing::Color::White;
+			this->result->Padding = System::Windows::Forms::Padding(8, 0, 6, 0);
 			// 
 			// Try
 			// 
@@ -148,7 +148,7 @@ namespace myOpenCV30 {
 			this->Try->Size = System::Drawing::Size(683, 115);
 			this->Try->TabIndex = 13;
 			this->Try->UseVisualStyleBackColor = true;
-			this->Try->Click += gcnew System::EventHandler(this, &MyNotFound::try_Click);
+			this->Try->Click += gcnew System::EventHandler(this, &MyNotFound::Try_Click);
 			this->Try->Text = L"Try with another picture";
 			this->Try->Visible = true;
 			// 
@@ -159,22 +159,22 @@ namespace myOpenCV30 {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(82)), static_cast<System::Int32>(static_cast<System::Byte>(89)), 
 				static_cast<System::Int32>(static_cast<System::Byte>(99)));
 			this->ClientSize = System::Drawing::Size(1411, 788);
-			this->Controls->Add(this->Informations);
-			this->Controls->Add(this->Titre2);
-			this->Controls->Add(this->Patient);
-			this->Controls->Add(this->Titre);
+			this->Controls->Add(this->informations);
+			this->Controls->Add(this->title2);
+			this->Controls->Add(this->patient);
+			this->Controls->Add(this->title);
 			this->Name = L"MyNotFound";
 			this->Text = L"MyNotFound";
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->Picture))->EndInit();
-			this->Patient->ResumeLayout(false);
-			this->Informations->ResumeLayout(false);
-			this->Informations->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->picture))->EndInit();
+			this->patient->ResumeLayout(false);
+			this->informations->ResumeLayout(false);
+			this->informations->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();	
 
 		}
 #pragma endregion
-	Void try_Click(System::Object^  sender, System::EventArgs^  e) {
+	Void Try_Click(System::Object^  sender, System::EventArgs^  e) {
 			Close();
 		 }
 
