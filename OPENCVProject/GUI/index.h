@@ -184,7 +184,7 @@ namespace myOpenCV30 {
 
 			///////////////////////////
 
-			int i = 2;
+			int i = 1;
 			if(i == 1){
 				myOpenCV30::MyPatientFound form;
 				form.ShowDialog();

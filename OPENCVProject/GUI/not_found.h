@@ -9,8 +9,6 @@
 #using <System.Data.dll> 
 #using <System.Drawing.dll>
 
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
 
 namespace myOpenCV30 {
 
@@ -20,7 +18,6 @@ namespace myOpenCV30 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	using namespace cv;
 	using namespace std;
 
 	public ref class MyNotFound : public System::Windows::Forms::Form{

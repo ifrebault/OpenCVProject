@@ -9,6 +9,8 @@
 #using <System.Data.dll> 
 #using <System.Drawing.dll>
 
+#include "patient_data.h"
+
 #include "my_global.h"
 #include "mysql.h"
 #define SERVER "127.0.0.1"
@@ -16,8 +18,6 @@
 #define PASSWORD ""
 #define DATABASE "bdd_test"
 
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
 
 namespace myOpenCV30 {
 
@@ -27,7 +27,6 @@ namespace myOpenCV30 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	using namespace cv;
 	using namespace std;
 
 	public ref class MyPatientFound : public System::Windows::Forms::Form{
@@ -239,6 +238,8 @@ namespace myOpenCV30 {
 	
 private: System::Void record_Click(System::Object^  sender, System::EventArgs^  e) {
 			 //LANCE LA FICHE MEDICALE
+			 myOpenCV30::MyPatientData form;
+			form.ShowDialog();
 		 }
 };
 }
