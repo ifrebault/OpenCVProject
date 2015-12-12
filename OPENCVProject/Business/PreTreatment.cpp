@@ -1,8 +1,8 @@
  //============================================================================
 // Name        : PreTreatment.cpp
-// Author      :
+// Author      : IFREBAULT
 // Version     :
-// Copyright   : Your copyright notice
+// Copyright   : 
 // Description : C++ project
 //============================================================================
 
@@ -12,7 +12,6 @@
 /*
 ETAPES :
 - Redimensionner à la même taille
-- Passer en niveau de gris
 - Egaliser (en option)
 */
 

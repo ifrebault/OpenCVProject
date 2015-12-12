@@ -1,8 +1,8 @@
 //============================================================================
 // Name        : Disease.cpp
-// Author      :
+// Author      : IFREBAULT
 // Version     :
-// Copyright   : Your copyright notice
+// Copyright   :
 // Description : C++ project
 //============================================================================
 

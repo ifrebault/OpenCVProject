@@ -1,8 +1,8 @@
 //============================================================================
 // Name        : FaceRecognition.cpp
-// Author      :
+// Author      : IFREBAULT
 // Version     :
-// Copyright   : http://docs.opencv.org/2.4/doc/tutorials/objdetect/cascade_classifier/cascade_classifier.html
+// Copyright   : http://docs.opencv.org/2.4/modules/contrib/doc/facerec/facerec_tutorial.html
 // Description : C++ project
 //============================================================================
 
@@ -11,10 +11,10 @@
 
 /*
 ETAPES :
-- Training avec la base dispo (à faire ultérieurement)
+- Training avec la base dispo
 - Récupération du visage seul 
-- Application de l'algo (EigenFaces ?)
-- ssortie du résultat
+- Application de l'algo
+- sortie du résultat
 */
 
 #include "opencv2/opencv.hpp"
@@ -39,16 +39,13 @@ using namespace cv;
 using namespace std;
 
 int recognise(Mat image){
-
-    int num_components = 0;
-    double threshold = 0;
-    int radius=1;
-    int neighbors=8;
-    int grid_x=8;
-    int grid_y=8;
-    
+    //à supprimer à terme
     int size_base=20;
-    int avoid = 19;
+    int avoid = 0;
+    
+    int predicted_label = -1;
+    double predicted_confidence = 0.0;
+    double threshold = 16500;
     
     vector<string> names;
     vector<int> labels;
@@ -70,22 +67,24 @@ int recognise(Mat image){
         Mat temp=imread(names[i]);
         images.push_back(treatment(detectFace(temp),true));
     }
-    
+    //à supprimer à terme
     images.erase(images.begin()+avoid);
     labels.erase(labels.begin()+avoid);
     names.erase(names.begin()+avoid);
 
-    Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer(); //pour faire fonctionner, ne pas renseigner de seuil de confiance
-    //Ptr<face::FaceRecognizer> model = face::createFisherFaceRecognizer(0); //pour faire fonctionner, ne pas renseigner de seuil de confiance
-
-    //Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer(1,8,64,64); //étudier influence des différents paramètres !
+    Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer();
     
-    model->train(images, labels);
+    model->train(images,labels);
 
     image=treatment(detectFace(image),true);
     
-    int predicted_label = model->predict(image);
+    model->predict(image, predicted_label, predicted_confidence);
+
+    if (predicted_confidence > threshold){
+        predicted_label=-1;
+    }
     
+    //utile pour debug sans IHM, à supprimer à terme
     if(predicted_label == -1){
         cout << "face not recognized..." << endl;
     }else{
@@ -94,6 +93,7 @@ int recognise(Mat image){
         imshow("image reconnue",treatment(imread(names[findInVector(labels, predicted_label)]),false));
         waitKey(0);
     }
+    
     return predicted_label;
 }
 

@@ -1,14 +1,14 @@
 //============================================================================
 // Name        : FaceExtraction.cpp
-// Author      :
+// Author      : IFREBAULT
 // Version     :
-// Copyright   : Your copyright notice
+// Copyright   : http://docs.opencv.org/2.4/doc/tutorials/objdetect/cascade_classifier/cascade_classifier.html
 // Description : C++ project
 //============================================================================
 
 //Entrée : Matrice
-//Sortie : Points caractéristiques
- 
+//Sortie : Matrice contenant uniquement le visage
+
 #include "opencv2/opencv.hpp"
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -26,19 +26,13 @@ using namespace std;
 //variables globales
 //attention, en cas d'erreur à la compilation, vérifier le chemin...
 String face_cascade_name = "../../OpenCVProject/OPENCVProject/Business/haarcascade_frontalface_alt.xml";
-String eyes_cascade_name = "../../OpenCVProject/OPENCVProject/Business/haarcascade_eye_tree_eyeglasses.xml";
 CascadeClassifier face_cascade;
-CascadeClassifier eyes_cascade;
-RNG rng(12345);
 
 Mat detectFace(Mat frame)
 {
     //vérification du chargement des cascades (fichiers xml)
     if( !face_cascade.load(face_cascade_name)){
         cout << "error loading face_cascade" << endl;
-    }
-    if( !eyes_cascade.load(eyes_cascade_name)){
-        cout << "error loading eye_cascade" << endl;
     }
     //face extraction
     Mat frame_gray;
