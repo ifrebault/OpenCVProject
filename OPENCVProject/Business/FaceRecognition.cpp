@@ -33,6 +33,7 @@ ETAPES :
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 using namespace cv;
 using namespace std;
@@ -46,7 +47,8 @@ void recognise(Mat image){
     int grid_x=8;
     int grid_y=8;
     
-    int size_base=19;
+    int size_base=20;
+    int avoid = 19;
     
     vector<string> names;
     vector<int> labels;
@@ -61,7 +63,7 @@ void recognise(Mat image){
     }
     //vérification de la cohérence de la base
     if (names.size()!=labels.size()){
-        cout << "Issue in the base : images sizes != labels sizes"<< endl;
+        cout << "Issue in the recognition base : images sizes != labels sizes"<< endl;
     }
     
     for(int i=0; i < size_base; i=i+1){
@@ -69,9 +71,14 @@ void recognise(Mat image){
         images.push_back(treatment(detectFace(temp),true));
     }
     
-    //Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer(); //pour faire fonctionner, ne pas renseigner de seuil de confiance
+    images.erase(images.begin()+avoid);
+    labels.erase(labels.begin()+avoid);
+    names.erase(names.begin()+avoid);
+
+    Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer(); //pour faire fonctionner, ne pas renseigner de seuil de confiance
     //Ptr<face::FaceRecognizer> model = face::createFisherFaceRecognizer(0); //pour faire fonctionner, ne pas renseigner de seuil de confiance
-    Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer(2,8,16,16); //étudier influence des différents paramètres !
+
+    //Ptr<cv::face::FaceRecognizer> model = face::createLBPHFaceRecognizer(1,8,64,64); //étudier influence des différents paramètres !
     
     model->train(images, labels);
 
@@ -84,9 +91,18 @@ void recognise(Mat image){
     }else{
         cout << "label image reconnue :" << endl;
         cout << predicted_label << endl;
-        imshow("image reconnue",treatment(imread(names[predicted_label]),false));
+        imshow("image reconnue",treatment(imread(names[findInVector(labels, predicted_label)]),false));
         waitKey(0);
     }
     
+}
+
+int findInVector(vector<int> vector, int a){
+    for (int i=0; i < vector.size(); i=i+1){
+        if (vector[i]==a){
+            return i;
+        }
+    }
+    return -1;
 }
 
