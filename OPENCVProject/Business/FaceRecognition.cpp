@@ -38,7 +38,7 @@ ETAPES :
 using namespace cv;
 using namespace std;
 
-void recognise(Mat image){
+int recognise(Mat image){
 
     int num_components = 0;
     double threshold = 0;
@@ -94,7 +94,7 @@ void recognise(Mat image){
         imshow("image reconnue",treatment(imread(names[findInVector(labels, predicted_label)]),false));
         waitKey(0);
     }
-    
+    return predicted_label;
 }
 
 int findInVector(vector<int> vector, int a){

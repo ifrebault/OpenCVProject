@@ -27,6 +27,7 @@ int main(int argc, const char * argv[]) {
     std::cout << "this is opencvproject !\n";
     
     //lecture du fichier à analyser
+    //Mat image = imread('"imgTemp.jpg");
     //Mat image = imread("../../OpenCVProject/BDDjpg/img4.jpg");
     Mat image = imread("../../OpenCVProject/BDDjpg/img19.jpg");
     cout << image.size() << endl;
