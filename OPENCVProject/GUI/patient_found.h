@@ -16,8 +16,7 @@
 #define SERVER "127.0.0.1"
 #define USER "root"
 #define PASSWORD ""
-#define DATABASE "bdd_test"
-
+#define DATABASE "classrecognition"
 
 namespace myOpenCV30 {
 
@@ -35,7 +34,7 @@ namespace myOpenCV30 {
 
 			MYSQL *connect; 
 			connect=mysql_init(NULL); 
-			if(!connect)   {
+			if(!connect){
 				fprintf(stderr,"MySQL Initialization Failed");
 			}
  
@@ -47,25 +46,31 @@ namespace myOpenCV30 {
 	
 			MYSQL_ROW row;  
 			MYSQL_RES *result = NULL;
-			unsigned int i = 0;
-			unsigned long *lengths;
-    
-			mysql_query(connect,"SELECT * FROM table_test");
+
+			//Id Patient
+			string id = "2";
+
+			//Name Patient
+			string selectName = "SELECT * FROM patient where id= " + id;
+			mysql_query(connect, selectName.c_str());
 			result = mysql_store_result(connect);
-
-			mysql_data_seek(result, 1);//On selectionne la ligne qu'on veut afficher
 			row = mysql_fetch_row(result);
-			lengths = mysql_fetch_lengths(result);
-			string test = row[1];
-		
-		    System::String^ str2 = gcnew System::String(test.c_str());//Conversion std string en system string
+			string nameId = row[1];
+			string firstnameId = row[2];
 
-			System::String^ name = str2;
-			System::String^ urlpicture = "bdd/img0";
+		    System::String^ name = gcnew System::String(nameId.c_str());
+			System::String^ firstname = gcnew System::String(firstnameId.c_str());
+			System::String^ patientName = name + " " + firstname;
 
+			//Picture Patient
+			string selectPicture = "SELECT * FROM picture where idPatient= " + id;
+			mysql_query(connect, selectPicture.c_str());
+			result = mysql_store_result(connect);
+			row = mysql_fetch_row(result);
+			string pictureId = row[2];
+			System::String^ picture = gcnew System::String(pictureId.c_str());
 
-			InitializeComponent(name, urlpicture);
-
+			InitializeComponent(patientName, picture);
 
 			mysql_free_result(result);
 			mysql_close(connect);
@@ -89,7 +94,7 @@ namespace myOpenCV30 {
 
 #pragma region Windows Form Designer generated code
 
-		void InitializeComponent(System::String^ name, System::String^ urlpicture){
+		void InitializeComponent(System::String^ name, System::String^ picture){
 			this->title = (gcnew System::Windows::Forms::Label());
 			this->picture = (gcnew System::Windows::Forms::PictureBox());
 			this->patient = (gcnew System::Windows::Forms::GroupBox());
@@ -102,6 +107,12 @@ namespace myOpenCV30 {
 			this->patient->SuspendLayout();
 			this->informations->SuspendLayout();
 			this->SuspendLayout();
+			//
+			//
+			// Data 
+			//
+			this->picture->ImageLocation = "C:/Users/DSi_5/Desktop/ProjetBis/myOpenCV30/bdd/" + picture + ".jpg";
+			this->namePatient->AppendText(name);
 			// 
 			// title
 			// 
@@ -117,7 +128,6 @@ namespace myOpenCV30 {
 			// 
 			// picture
 			// 
-			this->picture->ImageLocation = "C:/Users/DSi_5/Desktop/ProjetBis/myOpenCV30/" + urlpicture + ".jpg";
 			this->picture->Location = System::Drawing::Point(20, 37);
 			this->picture->Name = L"picture";
 			this->picture->Size = System::Drawing::Size(427, 489);
@@ -181,8 +191,6 @@ namespace myOpenCV30 {
 			// 
 			// namePatient
 			//
-			
-			this->namePatient->AppendText(name);
 			this->namePatient->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->namePatient->Cursor = System::Windows::Forms::Cursors::Default;
 			this->namePatient->Enabled = false;

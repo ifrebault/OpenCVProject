@@ -9,6 +9,13 @@
 #using <System.Data.dll> 
 #using <System.Drawing.dll>
 
+#include "my_global.h"
+#include "mysql.h"
+#define SERVER "127.0.0.1"
+#define USER "root"
+#define PASSWORD ""
+#define DATABASE "classrecognition"
+
 namespace myOpenCV30  {
 
 	using namespace System;
@@ -22,20 +29,78 @@ namespace myOpenCV30  {
 	public ref class MyPatientData : public System::Windows::Forms::Form{
 	public:
 		MyPatientData(void){
-			InitializeComponent();
 
+			MYSQL *connect; 
+			connect=mysql_init(NULL); 
+			if(!connect){
+				fprintf(stderr,"MySQL Initialization Failed");
+			}
+ 
+			connect=mysql_real_connect(connect,SERVER,USER,PASSWORD,DATABASE,0,NULL,0);
+
+			if(!connect){
+				printf("Connection Failed!\n");
+			}
+	
+			MYSQL_ROW row;  
+			MYSQL_RES *result = NULL;
+
+			//Id Patient
+			string id = "2";
+
+			//Data Patient
+			string selectData = "SELECT * FROM patient where id= " + id;
+			mysql_query(connect, selectData.c_str());
+			result = mysql_store_result(connect);
+			row = mysql_fetch_row(result);
+			string nameId = row[1];
+			string firstnameId = row[2];
+			string genderId = row[3];
+			string birthDateId = row[4];
+			string SSNId = row[5];
+			string addressId = row[6];
+			string telephoneNumberId = row[7];
+			string emailId = row[8];
+
+		    System::String^ name = gcnew System::String(nameId.c_str());
+			System::String^ firstname = gcnew System::String(firstnameId.c_str());
+			System::String^ gender = gcnew System::String(genderId.c_str());
+			System::String^ birthDate = gcnew System::String(birthDateId.c_str());
+			System::String^ SSN = gcnew System::String(SSNId.c_str());
+			System::String^ address = gcnew System::String(addressId.c_str());
+			System::String^ phoneNumber = gcnew System::String(telephoneNumberId.c_str());
+			System::String^ email = gcnew System::String(emailId.c_str());
+
+			//Picture Patient
+			string selectPicture = "SELECT * FROM picture where idPatient= " + id;
+			mysql_query(connect, selectPicture.c_str());
+			result = mysql_store_result(connect);
+			row = mysql_fetch_row(result);
+			string pictureId = row[2];
+			System::String^ picture = gcnew System::String(pictureId.c_str());
+
+			//Disease Patient
+			string selectDisease = "SELECT * FROM disease where idPatient= " + id;
+			mysql_query(connect, selectDisease.c_str());
+			result = mysql_store_result(connect);
+			row = mysql_fetch_row(result);
+			string diseaseId = row[2];
+			string treatmentId = row[3];
+
+			System::String^ disease = gcnew System::String(diseaseId.c_str());
+			System::String^ treatment = gcnew System::String(treatmentId.c_str());
+
+			InitializeComponent(name, firstname, gender, birthDate, SSN, address, phoneNumber, email, picture, disease, treatment);
 		}
 
 	protected:
-		~MyPatientData()
-		{
+		~MyPatientData(){
 			if (components){delete components;}
 		}
 
 	System::Windows::Forms::Label^  title;
 	System::Windows::Forms::Label^  title2;
 	System::Windows::Forms::PictureBox^  picture;
-	System::Windows::Forms::Label^  placeBirthdayLabel;
 	System::Windows::Forms::Label^  socialNumberPatient;
 	System::Windows::Forms::Label^  addressLabel;
 	System::Windows::Forms::Label^  addressPatient;
@@ -43,25 +108,26 @@ namespace myOpenCV30  {
 	System::Windows::Forms::Label^  genderPatient;
 	System::Windows::Forms::Label^  namePatient;
 	System::Windows::Forms::Label^  nameLabel;
-	System::Windows::Forms::Label^  placeBirthdayPatient;
 	System::Windows::Forms::Label^  emailLabel;
 	System::Windows::Forms::Label^  emailPatient;
 	System::Windows::Forms::Label^  phoneLabel;
-	System::Windows::Forms::Label^  numberPatient;
+	System::Windows::Forms::Label^  phonePatient;
 	System::Windows::Forms::Label^  genderLabel;
 	System::Windows::Forms::Label^  socialNumberLabel;
 	System::Windows::Forms::Label^  birthdayLabel;
-	System::Windows::Forms::ListBox^  diseaseLabel;
 	System::Windows::Forms::Label^  ongoingTreatmentLabel;
 	System::Windows::Forms::Label^  patientLabel;
+	System::Windows::Forms::Label^  diseaseLabel;
+	System::Windows::Forms::Label^  treatmentLabel;
+	System::Windows::Forms::Label^  diseasePatient;
+	System::Windows::Forms::Label^  treatmentPatient;
 	System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
-		void InitializeComponent(void){
+		void InitializeComponent(System::String^ name,System::String^ firstname,System::String^ gender,System::String^ birthDate,System::String^ SSN,System::String^ address,System::String^ phoneNumber, System::String^ email, System::String^ picture, System::String^ disease, System::String^ treatment){
 			this->title = (gcnew System::Windows::Forms::Label());
 			this->title2 = (gcnew System::Windows::Forms::Label());
 			this->picture = (gcnew System::Windows::Forms::PictureBox());
-			this->placeBirthdayLabel = (gcnew System::Windows::Forms::Label());
 			this->socialNumberPatient = (gcnew System::Windows::Forms::Label());
 			this->addressLabel = (gcnew System::Windows::Forms::Label());
 			this->addressPatient = (gcnew System::Windows::Forms::Label());
@@ -69,32 +135,36 @@ namespace myOpenCV30  {
 			this->genderPatient = (gcnew System::Windows::Forms::Label());
 			this->namePatient = (gcnew System::Windows::Forms::Label());
 			this->nameLabel = (gcnew System::Windows::Forms::Label());
-			this->placeBirthdayPatient = (gcnew System::Windows::Forms::Label());
 			this->emailLabel = (gcnew System::Windows::Forms::Label());
 			this->emailPatient = (gcnew System::Windows::Forms::Label());
 			this->phoneLabel = (gcnew System::Windows::Forms::Label());
-			this->numberPatient = (gcnew System::Windows::Forms::Label());
+			this->phonePatient = (gcnew System::Windows::Forms::Label());
 			this->genderLabel = (gcnew System::Windows::Forms::Label());
 			this->socialNumberLabel = (gcnew System::Windows::Forms::Label());
 			this->birthdayLabel = (gcnew System::Windows::Forms::Label());
-			this->diseaseLabel = (gcnew System::Windows::Forms::ListBox());
 			this->ongoingTreatmentLabel = (gcnew System::Windows::Forms::Label());
 			this->patientLabel = (gcnew System::Windows::Forms::Label());
+			this->diseaseLabel = (gcnew System::Windows::Forms::Label());
+			this->treatmentLabel = (gcnew System::Windows::Forms::Label());
+			this->diseasePatient = (gcnew System::Windows::Forms::Label());
+			this->treatmentPatient = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->picture))->BeginInit();
 			this->SuspendLayout();
 			//
 			//
 			//Data du patient, c'est ici qu'on met les données de la bdd
 			//
-			this->picture->ImageLocation = "C:/Users/DSi_5/Desktop/Projet2/img0.jpg";
-			this->socialNumberPatient->Text = "X XX XX XX XXX XXX XX";
-			this->addressPatient->Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-			this->birthdayPatient->Text = "XX/XX/XXXX";
-			this->genderPatient->Text = "Female";
-			this->namePatient->Text = "Inès Frebault";
-			this->placeBirthdayPatient->Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-			this->emailPatient->Text = "Lorem@Lorem.Lorem";
-			this->numberPatient->Text = "XX XX XX XX XX";
+			this->picture->ImageLocation = "C:/Users/DSi_5/Desktop/ProjetBis/myOpenCV30/bdd/" + picture + ".jpg";
+			this->namePatient->Text = name + " " + firstname;
+			this->genderPatient->Text = gender;
+			this->birthdayPatient->Text = birthDate;
+			this->socialNumberPatient->Text = SSN;
+			this->addressPatient->Text = address;		
+			this->emailPatient->Text = email;
+			this->phonePatient->Text = phoneNumber;
+			this->diseasePatient->Text = disease;
+			this->treatmentPatient->Text = treatment;
+			
 			// 
 			// title
 			// 
@@ -143,17 +213,17 @@ namespace myOpenCV30  {
 			// 
 			// numberPatient
 			// 
-			this->numberPatient->AutoSize = true;
-			this->numberPatient->BackColor = System::Drawing::Color::Transparent;
-			this->numberPatient->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->numberPatient->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->phonePatient->AutoSize = true;
+			this->phonePatient->BackColor = System::Drawing::Color::Transparent;
+			this->phonePatient->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->phonePatient->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->numberPatient->ForeColor = System::Drawing::Color::White;
-			this->numberPatient->Location = System::Drawing::Point(343, 572);
-			this->numberPatient->Name = L"numberPatient";
-			this->numberPatient->Padding = System::Windows::Forms::Padding(5, 5, 50, 5);
-			this->numberPatient->Size = System::Drawing::Size(320, 49);
-			this->numberPatient->TabIndex = 30;
+			this->phonePatient->ForeColor = System::Drawing::Color::White;
+			this->phonePatient->Location = System::Drawing::Point(343, 497);
+			this->phonePatient->Name = L"numberPatient";
+			this->phonePatient->Padding = System::Windows::Forms::Padding(5, 5, 50, 5);
+			this->phonePatient->Size = System::Drawing::Size(320, 49);
+			this->phonePatient->TabIndex = 30;
 			// 
 			// emailPatient
 			// 
@@ -163,10 +233,10 @@ namespace myOpenCV30  {
 			this->emailPatient->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->emailPatient->ForeColor = System::Drawing::Color::White;
-			this->emailPatient->Location = System::Drawing::Point(984, 572);
+			this->emailPatient->Location = System::Drawing::Point(804, 497);
 			this->emailPatient->Name = L"emailPatient";
 			this->emailPatient->Padding = System::Windows::Forms::Padding(5, 5, 50, 5);
-			this->emailPatient->Size = System::Drawing::Size(386, 49);
+			this->emailPatient->Size = System::Drawing::Size(159, 49);
 			this->emailPatient->TabIndex = 28;
 			// addressPatient
 			// 
@@ -224,6 +294,34 @@ namespace myOpenCV30  {
 			this->namePatient->Size = System::Drawing::Size(260, 49);
 			this->namePatient->TabIndex = 24;
 			// 
+			// DiseasePatient
+			// 
+			this->diseasePatient->AutoSize = true;
+			this->diseasePatient->BackColor = System::Drawing::Color::Transparent;
+			this->diseasePatient->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->diseasePatient->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->diseasePatient->ForeColor = System::Drawing::Color::White;
+			this->diseasePatient->Location = System::Drawing::Point(21, 695);
+			this->diseasePatient->Name = L"DiseasePatient";
+			this->diseasePatient->Padding = System::Windows::Forms::Padding(5, 5, 0, 5);
+			this->diseasePatient->Size = System::Drawing::Size(412, 49);
+			this->diseasePatient->TabIndex = 39;
+			// 
+			// TreatmentPatient
+			// 
+			this->treatmentPatient->AutoSize = true;
+			this->treatmentPatient->BackColor = System::Drawing::Color::Transparent;
+			this->treatmentPatient->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->treatmentPatient->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->treatmentPatient->ForeColor = System::Drawing::Color::White;
+			this->treatmentPatient->Location = System::Drawing::Point(541, 695);
+			this->treatmentPatient->Name = L"TreatmentPatient";
+			this->treatmentPatient->Padding = System::Windows::Forms::Padding(5, 5, 0, 5);
+			this->treatmentPatient->Size = System::Drawing::Size(805, 49);
+			this->treatmentPatient->TabIndex = 41;
+			// 
 			// nameLabel
 			// 
 			this->nameLabel->AutoSize = true;
@@ -239,20 +337,6 @@ namespace myOpenCV30  {
 			this->nameLabel->TabIndex = 25;
 			this->nameLabel->Text = L"Name";
 			// 
-			// placeBirthdayPatient
-			// 
-			this->placeBirthdayPatient->AutoSize = true;
-			this->placeBirthdayPatient->BackColor = System::Drawing::Color::Transparent;
-			this->placeBirthdayPatient->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->placeBirthdayPatient->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, 
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->placeBirthdayPatient->ForeColor = System::Drawing::Color::White;
-			this->placeBirthdayPatient->Location = System::Drawing::Point(368, 498);
-			this->placeBirthdayPatient->Name = L"placeBirthdayPatient";
-			this->placeBirthdayPatient->Padding = System::Windows::Forms::Padding(5, 5, 0, 5);
-			this->placeBirthdayPatient->Size = System::Drawing::Size(805, 49);
-			this->placeBirthdayPatient->TabIndex = 26;
-			// 
 			// emailLabel
 			// 
 			this->emailLabel->AutoSize = true;
@@ -261,7 +345,7 @@ namespace myOpenCV30  {
 			this->emailLabel->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->emailLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->emailLabel->Location = System::Drawing::Point(803, 572);
+			this->emailLabel->Location = System::Drawing::Point(804, 497);
 			this->emailLabel->Name = L"emailLabel";
 			this->emailLabel->Padding = System::Windows::Forms::Padding(5, 5, 50, 5);
 			this->emailLabel->Size = System::Drawing::Size(159, 49);
@@ -276,27 +360,12 @@ namespace myOpenCV30  {
 			this->phoneLabel->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->phoneLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->phoneLabel->Location = System::Drawing::Point(21, 572);
+			this->phoneLabel->Location = System::Drawing::Point(21, 497);
 			this->phoneLabel->Name = L"phoneLabel";
 			this->phoneLabel->Padding = System::Windows::Forms::Padding(5, 5, 50, 5);
 			this->phoneLabel->Size = System::Drawing::Size(302, 49);
 			this->phoneLabel->TabIndex = 29;
 			this->phoneLabel->Text = L"Phone Number";
-			// 
-			// placeBirthdayLabel
-			// 
-			this->placeBirthdayLabel->AutoSize = true;
-			this->placeBirthdayLabel->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(248)), 
-				static_cast<System::Int32>(static_cast<System::Byte>(143)), static_cast<System::Int32>(static_cast<System::Byte>(54)));
-			this->placeBirthdayLabel->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->placeBirthdayLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
-				static_cast<System::Byte>(0)));
-			this->placeBirthdayLabel->Location = System::Drawing::Point(21, 498);
-			this->placeBirthdayLabel->Name = L"placeBirthdayLabel";
-			this->placeBirthdayLabel->Padding = System::Windows::Forms::Padding(5, 5, 50, 5);
-			this->placeBirthdayLabel->Size = System::Drawing::Size(329, 49);
-			this->placeBirthdayLabel->TabIndex = 16;
-			this->placeBirthdayLabel->Text = L"Place of birthday";
 			// 
 			// addressLabel
 			// 
@@ -359,18 +428,6 @@ namespace myOpenCV30  {
 			this->birthdayLabel->TabIndex = 33;
 			this->birthdayLabel->Text = L"Birthday";
 			// 
-			// diseaseLabel
-			// 
-			this->diseaseLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
-				static_cast<System::Byte>(0)));
-			this->diseaseLabel->FormattingEnabled = true;
-			this->diseaseLabel->ItemHeight = 32;
-			this->diseaseLabel->Items->AddRange(gcnew cli::array< System::Object^  >(4) {L"Disease", L"Disease", L"Disease", L"Disease"});
-			this->diseaseLabel->Location = System::Drawing::Point(21, 714);
-			this->diseaseLabel->Name = L"diseaseLabel";
-			this->diseaseLabel->Size = System::Drawing::Size(199, 164);
-			this->diseaseLabel->TabIndex = 34;
-			// 
 			// ongoingTreatmentLabel
 			// 
 			this->ongoingTreatmentLabel->AutoSize = true;
@@ -380,7 +437,7 @@ namespace myOpenCV30  {
 			this->ongoingTreatmentLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->ongoingTreatmentLabel->ForeColor = System::Drawing::Color::White;
-			this->ongoingTreatmentLabel->Location = System::Drawing::Point(21, 640);
+			this->ongoingTreatmentLabel->Location = System::Drawing::Point(21, 558);
 			this->ongoingTreatmentLabel->Name = L"ongoingTreatmentLabel";
 			this->ongoingTreatmentLabel->Padding = System::Windows::Forms::Padding(540, 5, 510, 5);
 			this->ongoingTreatmentLabel->Size = System::Drawing::Size(1363, 49);
@@ -403,6 +460,34 @@ namespace myOpenCV30  {
 			this->patientLabel->TabIndex = 36;
 			this->patientLabel->Text = L"Patient ";
 			// 
+			// DiseaseLabel
+			// 
+			this->diseaseLabel->AutoSize = true;
+			this->diseaseLabel->BackColor = System::Drawing::Color::MediumSpringGreen;
+			this->diseaseLabel->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->diseaseLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->diseaseLabel->Location = System::Drawing::Point(21, 623);
+			this->diseaseLabel->Name = L"DiseaseLabel";
+			this->diseaseLabel->Padding = System::Windows::Forms::Padding(5, 5, 50, 5);
+			this->diseaseLabel->Size = System::Drawing::Size(195, 49);
+			this->diseaseLabel->TabIndex = 37;
+			this->diseaseLabel->Text = L"Disease";
+			// 
+			// TreatmentLabel
+			// 
+			this->treatmentLabel->AutoSize = true;
+			this->treatmentLabel->BackColor = System::Drawing::Color::MediumSpringGreen;
+			this->treatmentLabel->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->treatmentLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->treatmentLabel->Location = System::Drawing::Point(541, 623);
+			this->treatmentLabel->Name = L"TreatmentLabel";
+			this->treatmentLabel->Padding = System::Windows::Forms::Padding(5, 5, 50, 5);
+			this->treatmentLabel->Size = System::Drawing::Size(229, 49);
+			this->treatmentLabel->TabIndex = 38;
+			this->treatmentLabel->Text = L"Treatment";
+			// 
 			// MyPatientData
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
@@ -410,17 +495,20 @@ namespace myOpenCV30  {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(82)), static_cast<System::Int32>(static_cast<System::Byte>(89)), 
 				static_cast<System::Int32>(static_cast<System::Byte>(99)));
 			this->ClientSize = System::Drawing::Size(1411, 949);
+			this->Controls->Add(this->treatmentPatient);
+			this->Controls->Add(this->diseasePatient);
+			this->Controls->Add(this->treatmentLabel);
+			this->Controls->Add(this->diseaseLabel);
 			this->Controls->Add(this->patientLabel);
 			this->Controls->Add(this->ongoingTreatmentLabel);
 			this->Controls->Add(this->diseaseLabel);
 			this->Controls->Add(this->birthdayLabel);
 			this->Controls->Add(this->socialNumberLabel);
 			this->Controls->Add(this->genderLabel);
-			this->Controls->Add(this->numberPatient);
+			this->Controls->Add(this->phonePatient);
 			this->Controls->Add(this->phoneLabel);
 			this->Controls->Add(this->emailPatient);
 			this->Controls->Add(this->emailLabel);
-			this->Controls->Add(this->placeBirthdayPatient);
 			this->Controls->Add(this->nameLabel);
 			this->Controls->Add(this->namePatient);
 			this->Controls->Add(this->genderPatient);
@@ -428,7 +516,6 @@ namespace myOpenCV30  {
 			this->Controls->Add(this->addressPatient);
 			this->Controls->Add(this->addressLabel);
 			this->Controls->Add(this->socialNumberPatient);
-			this->Controls->Add(this->placeBirthdayLabel);
 			this->Controls->Add(this->picture);
 			this->Controls->Add(this->title2);
 			this->Controls->Add(this->title);

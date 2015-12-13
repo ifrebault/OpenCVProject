@@ -9,7 +9,6 @@
 #using <System.Data.dll> 
 #using <System.Drawing.dll>
 
-
 namespace myOpenCV30 {
 
 	using namespace System;
@@ -28,7 +27,6 @@ namespace myOpenCV30 {
 		}
 
 	protected:
-
 		~MyNotFound(){
 			if (components){delete components;}
 		}
