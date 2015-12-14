@@ -9,6 +9,7 @@
 #include "opencv2/opencv.hpp"
 
 cv::Mat treatment(cv::Mat image, bool equal);
+void TestU_treatment (cv::Mat image, bool equal);
 
 
 #endif

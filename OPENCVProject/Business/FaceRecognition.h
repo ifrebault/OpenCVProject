@@ -8,5 +8,6 @@
 
 int recognise(cv::Mat image);
 int findInVector(std::vector<int> vector, int a);
+void TestU_recognise (cv::Mat image);
 
 #endif

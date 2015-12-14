@@ -10,12 +10,14 @@
 //Sortie : Matrice
 
 /*
-ETAPES :
-- Training avec la base dispo
-- Récupération du visage seul 
-- Application de l'algo
-- sortie du résultat
-*/
+ ETAPES :
+ - Training avec la base dispo
+ - Récupération du visage seul
+ - Application de l'algo
+ - sortie du résultat
+ */
+
+#define TESTU
 
 #include "opencv2/opencv.hpp"
 #include "opencv2/core/core.hpp"
@@ -38,10 +40,11 @@ ETAPES :
 using namespace cv;
 using namespace std;
 
+
 int recognise(Mat image){
     //à supprimer à terme
     int size_base=20;
-    int avoid = 0;
+    int avoid = 13;
     
     int predicted_label = -1;
     double predicted_confidence = 0.0;
@@ -51,7 +54,7 @@ int recognise(Mat image){
     vector<int> labels;
     vector<Mat> images;
     //todo : construction base à refaire une fois BDD dispo
-
+    
     //construction du vecteur de noms de fichier temporaire :
     for(int i=0; i < size_base; i=i+1){
         std::string iString = std::to_string(i);
@@ -71,15 +74,15 @@ int recognise(Mat image){
     images.erase(images.begin()+avoid);
     labels.erase(labels.begin()+avoid);
     names.erase(names.begin()+avoid);
-
+    
     Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer();
     
     model->train(images,labels);
-
+    
     image=treatment(detectFace(image),true);
     
     model->predict(image, predicted_label, predicted_confidence);
-
+    
     if (predicted_confidence > threshold){
         predicted_label=-1;
     }
@@ -106,3 +109,26 @@ int findInVector(vector<int> vector, int a){
     return -1;
 }
 
+ #ifdef TESTU
+
+void TestU_recognise (Mat image)
+ {
+ 
+ Mat imageTest = imread("../../OpenCVProject/BDDjpg/img13.jpg");
+ int test = recognise(imageTest);
+ 
+ if(test==15)
+ {
+ std::cout << "TU FaceRecognition : image reconnue \n";
+
+ }
+ else
+ {
+ std::cout << "TU FaceRecognition : attention image non reconnue \n";
+
+ 
+ }
+
+ }
+ 
+ #endif
