@@ -28,6 +28,8 @@
 #include "PreTreatment.h"
 #include "FaceRecognition.h"
 #include "FaceExtraction.h"
+#include "SendMatrixToBusiness.h"
+
 
 #include "opencv2/face.hpp"
 
@@ -53,7 +55,10 @@ int recognise(Mat image){
     vector<string> names;
     vector<int> labels;
     vector<Mat> images;
+   
     //todo : construction base à refaire une fois BDD dispo
+    names = getNames();
+    labels = getIds();
     
     //construction du vecteur de noms de fichier temporaire :
     for(int i=0; i < size_base; i=i+1){
