@@ -190,11 +190,10 @@ namespace myOpenCV30 {
  
 	Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 
-		//Mat image = imread("../ImgTemp/imgTemp.jpg");
-		Mat image = imread("../BDDjpg/img0.jpg");
+		Mat image = imread("../ImgTemp/imgTemp.jpg");
+		//Mat image = imread("../BDDjpg/img15.jpg");
 		treatment(image,false);
 		int state = recognise(image);
-			
 		if(state == -1){
 			myOpenCV30::MyNotFound  form;
 			form.ShowDialog();

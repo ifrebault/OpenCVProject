@@ -71,7 +71,7 @@ namespace myOpenCV30 {
 			// 
 			this->picture->Location = System::Drawing::Point(20, 37);
 			this->picture->Name = L"picture";
-			this->picture->ImageLocation = L"C:/Users/DSi_5/Desktop/Projet2/not_found.png";
+			this->picture->ImageLocation = "../BDDjpg/not_found.png";
 			this->picture->Size = System::Drawing::Size(427, 489);
 			this->picture->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->picture->TabIndex = 2;

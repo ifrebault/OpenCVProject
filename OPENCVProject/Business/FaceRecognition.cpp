@@ -52,18 +52,50 @@ int recognise(Mat image){
 	int size_base = 20;
     int avoid = 13;
 
-    for(int i=0; i < size_base; i=i+1){
+	MYSQL *connect; 
+	connect=mysql_init(NULL); 
+	if(!connect){
+		fprintf(stderr,"MySQL Initialization Failed");
+	}
+ 
+	connect=mysql_real_connect(connect,SERVER,USER,PASSWORD,DATABASE,0,NULL,0);
+
+	if(!connect){
+		printf("Connection Failed!\n");
+	}
+
+
+	MYSQL_ROW row;  
+	MYSQL_RES *result = NULL;
+
+	string data = "SELECT COUNT(*) FROM picture";
+	mysql_query(connect, data.c_str());
+	result = mysql_store_result(connect);
+
+	/*for(int i=0; i < 11; i=i+1){
+		int i2= i + 1;
+		string select = "SELECT * FROM picture where id=" + to_string(i2) ;
+		mysql_query(connect, select.c_str());
+		result = mysql_store_result(connect);
+		row = mysql_fetch_row(result);
+		string picture = row[2];
+		names.push_back("../BDDjpg/" + picture + ".jpg");
+		labels.push_back(i);
+	}*/
+
+   for(int i=0; i < size_base; i=i+1){
         std::string iString = std::to_string(i);
         names.push_back("../BDDjpg/img" + iString + ".jpg");
         labels.push_back(i);
     }
 
+
     if (names.size()!=labels.size()){
         cout << "Issue in the recognition base : images sizes != labels sizes"<< endl;
     }
     
-    for(int i=0; i < size_base; i=i+1){
-        Mat temp=imread(names[i]);
+    for(int i=0; i <size_base; i=i+1){
+		Mat temp=imread(names.at(i));
         images.push_back(treatment(detectFace(temp),true));
     }
 
@@ -89,30 +121,16 @@ int recognise(Mat image){
         cout << "label image reconnue :" << endl;
         //cout << predicted_label << endl;
 
-		MYSQL *connect; 
-			connect=mysql_init(NULL); 
-			if(!connect){
-				fprintf(stderr,"MySQL Initialization Failed");
-			}
- 
-			connect=mysql_real_connect(connect,SERVER,USER,PASSWORD,DATABASE,0,NULL,0);
 
-			if(!connect){
-				printf("Connection Failed!\n");
-			}
-	
-			MYSQL_ROW row;  
-			MYSQL_RES *result = NULL;
-
-			string deleteData = "DELETE FROM insertdata ";
-			mysql_query(connect, deleteData.c_str());
+	string deleteData = "DELETE FROM insertdata ";
+	mysql_query(connect, deleteData.c_str());
 			
 
-			string insertData = "INSERT INTO insertdata (id) VALUES ('''img" +  to_string(predicted_label);
-			insertData.append("''')");
+	string insertData = "INSERT INTO insertdata (id) VALUES ('''img" +  to_string(predicted_label);
+	insertData.append("''')");
 
-			mysql_query(connect, insertData.c_str());
-        //imshow("image reconnue",treatment(imread(names[findInVector(labels, predicted_label)]),false));
+	mysql_query(connect, insertData.c_str());
+//imshow("image reconnue",treatment(imread(names[findInVector(labels, predicted_label)]),false));
     }
     
     return predicted_label;
