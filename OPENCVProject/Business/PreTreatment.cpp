@@ -14,8 +14,6 @@ ETAPES :
 - Redimensionner à la même taille
 - Egaliser (en option)
 */
-#define TESTU
-
 #include "opencv2/opencv.hpp"
 
 using namespace std;
@@ -32,20 +30,3 @@ Mat treatment(Mat image, bool equal){
     }
     return image2;
 }
-#ifdef TESTU 
-
-void TestU_treatment (Mat image, bool equal)
-{
-    Mat imageTest = treatment(image,equal);
-    Size sizeImage(278,338);
-    if(imageTest.size()==sizeImage)
-    {
-        std::cout << "TU treatment : image de la bonne taille\n";
-    }
-    else
-    {
-        std::cout << "TU treatment : Attention, l'image de la bonne taille !\n";
-    }
-}
-
-#endif

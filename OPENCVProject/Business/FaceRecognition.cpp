@@ -8,17 +8,6 @@
 
 //Entrée : Image
 //Sortie : Matrice
-
-/*
- ETAPES :
- - Training avec la base dispo
- - Récupération du visage seul
- - Application de l'algo
- - sortie du résultat
- */
-
-#define TESTU
-
 #include "opencv2/opencv.hpp"
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -28,8 +17,7 @@
 #include "PreTreatment.h"
 #include "FaceRecognition.h"
 #include "FaceExtraction.h"
-#include "SendMatrixToBusiness.h"
-
+//#include "../Com/SendMatrixToBusiness.h"
 
 #include "opencv2/face.hpp"
 
@@ -39,15 +27,19 @@
 #include <vector>
 #include <algorithm>
 
+#include "my_global.h"
+#include "mysql.h"
+#define SERVER "127.0.0.1"
+#define USER "root"
+#define PASSWORD ""
+#define DATABASE "classrecognition"
+
 using namespace cv;
 using namespace std;
 
 
 int recognise(Mat image){
-    //à supprimer à terme
-    int size_base=20;
-    int avoid = 13;
-    
+
     int predicted_label = -1;
     double predicted_confidence = 0.0;
     double threshold = 16500;
@@ -55,18 +47,17 @@ int recognise(Mat image){
     vector<string> names;
     vector<int> labels;
     vector<Mat> images;
-   
-    //todo : construction base à refaire une fois BDD dispo
-    names = getNames();
-    labels = getIds();
     
-    //construction du vecteur de noms de fichier temporaire :
+	/* Com*/
+	int size_base = 20;
+    int avoid = 13;
+
     for(int i=0; i < size_base; i=i+1){
         std::string iString = std::to_string(i);
-        names.push_back("../../OpenCVProject/BDDjpg/img" + iString + ".jpg");
+        names.push_back("../BDDjpg/img" + iString + ".jpg");
         labels.push_back(i);
     }
-    //vérification de la cohérence de la base
+
     if (names.size()!=labels.size()){
         cout << "Issue in the recognition base : images sizes != labels sizes"<< endl;
     }
@@ -75,10 +66,10 @@ int recognise(Mat image){
         Mat temp=imread(names[i]);
         images.push_back(treatment(detectFace(temp),true));
     }
-    //à supprimer à terme
-    images.erase(images.begin()+avoid);
+
+    /*images.erase(images.begin()+avoid);
     labels.erase(labels.begin()+avoid);
-    names.erase(names.begin()+avoid);
+    names.erase(names.begin()+avoid);*/
     
     Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer();
     
@@ -92,14 +83,36 @@ int recognise(Mat image){
         predicted_label=-1;
     }
     
-    //utile pour debug sans IHM, à supprimer à terme
     if(predicted_label == -1){
         cout << "face not recognized..." << endl;
     }else{
         cout << "label image reconnue :" << endl;
-        cout << predicted_label << endl;
-        imshow("image reconnue",treatment(imread(names[findInVector(labels, predicted_label)]),false));
-        waitKey(0);
+        //cout << predicted_label << endl;
+
+		MYSQL *connect; 
+			connect=mysql_init(NULL); 
+			if(!connect){
+				fprintf(stderr,"MySQL Initialization Failed");
+			}
+ 
+			connect=mysql_real_connect(connect,SERVER,USER,PASSWORD,DATABASE,0,NULL,0);
+
+			if(!connect){
+				printf("Connection Failed!\n");
+			}
+	
+			MYSQL_ROW row;  
+			MYSQL_RES *result = NULL;
+
+			string deleteData = "DELETE FROM insertdata ";
+			mysql_query(connect, deleteData.c_str());
+			
+
+			string insertData = "INSERT INTO insertdata (id) VALUES ('''img" +  to_string(predicted_label);
+			insertData.append("''')");
+
+			mysql_query(connect, insertData.c_str());
+        //imshow("image reconnue",treatment(imread(names[findInVector(labels, predicted_label)]),false));
     }
     
     return predicted_label;
@@ -114,26 +127,3 @@ int findInVector(vector<int> vector, int a){
     return -1;
 }
 
- #ifdef TESTU
-
-void TestU_recognise (Mat image)
- {
- 
- Mat imageTest = imread("../../OpenCVProject/BDDjpg/img13.jpg");
- int test = recognise(imageTest);
- 
- if(test==15)
- {
- std::cout << "TU FaceRecognition : image reconnue \n";
-
- }
- else
- {
- std::cout << "TU FaceRecognition : attention image non reconnue \n";
-
- 
- }
-
- }
- 
- #endif

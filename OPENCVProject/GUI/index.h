@@ -2,6 +2,16 @@
 #define FIRST_H_INCLUDED
 
 #pragma once
+
+#include "opencv2/opencv.hpp"
+#include <iostream>
+#include <ctime>
+
+#include "../Business/Patient.h"
+
+#include "../Business/PreTreatment.h"
+#include "../Business/FaceRecognition.h"
+
 #using <mscorlib.dll> 
 #using <System.dll> 
 #using <System.Windows.Forms.dll> 
@@ -129,7 +139,7 @@ namespace myOpenCV30 {
 			this->load->Name = L"button1";
 			this->load->Size = System::Drawing::Size(239, 59);
 			this->load->TabIndex = 29;
-			this->load->Text = L"Load";
+			this->load->Text = L"Recognition";
 			this->load->UseVisualStyleBackColor = true;
 			this->load->Visible = false;
 			this->load->Click += gcnew System::EventHandler(this, &MyIndex::button1_Click);
@@ -172,7 +182,7 @@ namespace myOpenCV30 {
 				capture = new VideoCapture(0);
 				cameraFrame = new Mat();
 			}
-			string str = "../imgTemp/imgTemp.jpg";
+			string str = "../ImgTemp/imgTemp.jpg";
 			capture->read(*cameraFrame); 
 			imwrite(str, *cameraFrame);
 			this->load->Visible = true;
@@ -180,21 +190,22 @@ namespace myOpenCV30 {
  
 	Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 
-			//ICI LE TRAITEMENT
-
-			///////////////////////////
-
-			int i = 1;
-			if(i == 1){
-				myOpenCV30::MyPatientFound form;
-				form.ShowDialog();
-			}
-
-			if(i == 2){
-				myOpenCV30::MyNotFound form;
-				form.ShowDialog();
-			}
-		 }
+		//Mat image = imread("../ImgTemp/imgTemp.jpg");
+		Mat image = imread("../BDDjpg/img0.jpg");
+		treatment(image,false);
+		int state = recognise(image);
+			
+		if(state == -1){
+			myOpenCV30::MyNotFound  form;
+			form.ShowDialog();
+		}else{
+			myOpenCV30::MyPatientFound  form;
+			form.ShowDialog();
+		}
+		
+		
+		 
+		}
 };
 }
 

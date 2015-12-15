@@ -46,7 +46,17 @@ namespace myOpenCV30  {
 			MYSQL_RES *result = NULL;
 
 			//Id Patient
-			string id = "2";
+			string selectIdImg = "SELECT * FROM insertData ";
+			mysql_query(connect, selectIdImg.c_str());
+			result = mysql_store_result(connect);
+			row = mysql_fetch_row(result);
+			string idImg = row[0];
+			
+			string selectId2 = "SELECT * FROM picture where fileName=" + idImg;
+			mysql_query(connect, selectId2.c_str());
+			result = mysql_store_result(connect);
+			row = mysql_fetch_row(result);
+			string id = row[1];
 
 			//Data Patient
 			string selectData = "SELECT * FROM patient where id= " + id;
@@ -154,7 +164,7 @@ namespace myOpenCV30  {
 			//
 			//Data du patient, c'est ici qu'on met les données de la bdd
 			//
-			this->picture->ImageLocation = "C:/Users/DSi_5/Desktop/ProjetBis/myOpenCV30/bdd/" + picture + ".jpg";
+			this->picture->ImageLocation = "../BDDjpg/" + picture + ".jpg";
 			this->namePatient->Text = name + " " + firstname;
 			this->genderPatient->Text = gender;
 			this->birthdayPatient->Text = birthDate;

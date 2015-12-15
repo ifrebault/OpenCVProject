@@ -11,6 +11,7 @@
 
 #include "patient_data.h"
 
+
 #include "my_global.h"
 #include "mysql.h"
 #define SERVER "127.0.0.1"
@@ -48,7 +49,17 @@ namespace myOpenCV30 {
 			MYSQL_RES *result = NULL;
 
 			//Id Patient
-			string id = "2";
+			string selectIdImg = "SELECT * FROM insertData ";
+			mysql_query(connect, selectIdImg.c_str());
+			result = mysql_store_result(connect);
+			row = mysql_fetch_row(result);
+			string idImg = row[0];
+			
+			string selectId2 = "SELECT * FROM picture where fileName=" + idImg;
+			mysql_query(connect, selectId2.c_str());
+			result = mysql_store_result(connect);
+			row = mysql_fetch_row(result);
+			string id = row[1];
 
 			//Name Patient
 			string selectName = "SELECT * FROM patient where id= " + id;
@@ -111,7 +122,7 @@ namespace myOpenCV30 {
 			//
 			// Data 
 			//
-			this->picture->ImageLocation = "C:/Users/DSi_5/Desktop/ProjetBis/myOpenCV30/bdd/" + picture + ".jpg";
+			this->picture->ImageLocation = "../BDDjpg/" + picture + ".jpg";
 			this->namePatient->AppendText(name);
 			// 
 			// title
