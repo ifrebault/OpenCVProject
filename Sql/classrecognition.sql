@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Dim 13 Décembre 2015 à 16:31
+-- Généré le :  Mar 15 Décembre 2015 à 11:06
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -43,6 +43,24 @@ INSERT INTO `disease` (`id`, `idPatient`, `disease`, `treatment`) VALUES
 (2, 2, 'Nothing', 'Nothing'),
 (3, 3, 'Nothing', 'Nothing'),
 (4, 4, 'Nothing', 'Nothing');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `insertdata`
+--
+
+CREATE TABLE IF NOT EXISTS `insertdata` (
+  `id` varchar(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `insertdata`
+--
+
+INSERT INTO `insertdata` (`id`) VALUES
+('''img0''');
 
 -- --------------------------------------------------------
 
