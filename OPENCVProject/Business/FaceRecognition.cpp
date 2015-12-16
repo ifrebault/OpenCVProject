@@ -6,8 +6,8 @@
 // Description : C++ project
 //============================================================================
 
-//Entrée : Image
-//Sortie : Matrice
+#define TESTU
+
 #include "opencv2/opencv.hpp"
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -34,11 +34,12 @@
 #define PASSWORD ""
 #define DATABASE "classrecognition"
 
+
 using namespace cv;
 using namespace std;
 
 
-int recognise(Mat image){
+int recognise(Mat image, int avoid){
 
     int predicted_label = -1;
     double predicted_confidence = 0.0;
@@ -50,8 +51,7 @@ int recognise(Mat image){
     
 	/* Com*/
 	int size_base = 20;
-    int avoid = 13;
-
+    
 	MYSQL *connect; 
 	connect=mysql_init(NULL); 
 	if(!connect){
@@ -71,7 +71,7 @@ int recognise(Mat image){
 	string data = "SELECT COUNT(*) FROM picture";
 	mysql_query(connect, data.c_str());
 	result = mysql_store_result(connect);
-
+    
 	/*for(int i=0; i < 11; i=i+1){
 		int i2= i + 1;
 		string select = "SELECT * FROM picture where id=" + to_string(i2) ;
@@ -82,6 +82,7 @@ int recognise(Mat image){
 		names.push_back("../BDDjpg/" + picture + ".jpg");
 		labels.push_back(i);
 	}*/
+    
 
    for(int i=0; i < size_base; i=i+1){
         std::string iString = std::to_string(i);
@@ -98,10 +99,12 @@ int recognise(Mat image){
 		Mat temp=imread(names.at(i));
         images.push_back(treatment(detectFace(temp),true));
     }
-
-    /*images.erase(images.begin()+avoid);
-    labels.erase(labels.begin()+avoid);
-    names.erase(names.begin()+avoid);*/
+    if(avoid !=-1){
+        images.erase(images.begin()+avoid);
+        labels.erase(labels.begin()+avoid);
+        names.erase(names.begin()+avoid);
+    }
+    
     
     Ptr<face::FaceRecognizer> model = face::createEigenFaceRecognizer();
     
@@ -121,7 +124,7 @@ int recognise(Mat image){
         cout << "label image reconnue :" << endl;
         //cout << predicted_label << endl;
 
-
+    
 	string deleteData = "DELETE FROM insertdata ";
 	mysql_query(connect, deleteData.c_str());
 			
@@ -130,8 +133,8 @@ int recognise(Mat image){
 	insertData.append("''')");
 
 	mysql_query(connect, insertData.c_str());
-//imshow("image reconnue",treatment(imread(names[findInVector(labels, predicted_label)]),false));
     }
+     
     
     return predicted_label;
 }
@@ -144,4 +147,18 @@ int findInVector(vector<int> vector, int a){
     }
     return -1;
 }
+
+#ifdef TESTU
+
+void TestU_recognise (Mat image){
+    Mat imageTest = imread("../../OpenCVProject/BDDjpg/img13.jpg");
+    int test = recognise(imageTest, 13);
+    if(test==15){
+            std::cout << "TU FaceRecognition : image reconnue \n";
+    }else{
+            std::cout << "TU FaceRecognition : attention image non reconnue \n";
+    }
+}
+
+#endif
 

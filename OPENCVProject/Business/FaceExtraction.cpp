@@ -25,7 +25,7 @@ using namespace std;
 
 //variables globales
 //attention, en cas d'erreur à la compilation, vérifier le chemin...
-String face_cascade_name = "./Business/haarcascade_frontalface_alt.xml";
+String face_cascade_name = "../Business/haarcascade_frontalface_alt.xml";
 CascadeClassifier face_cascade;
 
 Mat detectFace(Mat frame)
