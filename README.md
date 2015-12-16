@@ -1,8 +1,9 @@
-# OpenCVProject
+# OpenCVProject for the course "Techniques de programmation en C++"
 
-Bibliothèques nécessaires pour exécuter le projet :
+You need to run this project :
 - openCV
 - openCV_contrib/face
+- visual studio (for the GUI)
 
 Team :
 - Jonathan COUTURIER
